@@ -10,7 +10,7 @@ angular.module('project', ['ngRoute', 'firebase'])
   $routeProvider
     .when('/', {
       controller:'ListCtrl',
-      templateUrl:'partials/project-list'
+      templateUrl:'partials/sr5-sheet'
     })
     .when('/edit/:projectId', {
       controller:'EditCtrl',

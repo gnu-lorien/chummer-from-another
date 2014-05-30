@@ -1,0 +1,71 @@
+h2 Shadowrun Fifth Edition
+//div.container(style="background-image:url('public/images/SR5 Logo Full.png'); background-repeat: no-repeat;")
+div.container
+  form(ng-submit='doneEditing()', name='sheetForm')
+    button(ng-click='doneEditing()') Submit Sheet
+    div.row
+      div.col-md-7
+        div.col-md-6(style="border-color:red; border-style:solid; border-radius: 4px")
+          h3.text-right Personal Data
+          div
+            p Name and such
+      div.col-md-5
+        ul.list-unstyled
+          li
+            span Character
+            input(type='text', placeholder='Character name', ng-model='sheet.name')
+          li
+            span Player
+            input(type='text', placeholder='Player name', ng-model='sheet.player')
+          li
+            span Notes
+            input(type='text', ng-model='sheet.notes')
+    div.row
+      div.col-md-6.sheet-region
+        div.row
+          div.col-md-6
+            ul.list-unstyled(ng-repeat="attribute in ['Body', 'Agility', 'Reaction', 'Strength', 'Willpower', 'Logic', 'Intuition', 'Edge', 'Charisma', 'Edge Points']")
+              li
+                ng-form(name='aform')
+                  div.form-group(ng-class!="{'has-error': aform.$invalid }")
+                    label.control-label(for='{{attribute}}') {{attribute}}
+                    input.form-control(type='number', ng-model="sheet[attribute]", min=0, max=36, name='myval')
+                    span(ng-show='aform.$invalid') Must be a number between 0 and 36
+          div.col-md-6
+            ul.list-unstyled(ng-repeat="attribute in ['Essence', 'Magic', 'Resonance', 'Initiative', 'Matrix Initiative', 'Astral Initiative', 'Composure', 'Judge Intentions', 'Lift/Carry', 'Memory', 'Movement']")
+              li
+                ng-form(name='aform')
+                  div.form-group(ng-class!="{'has-error': aform.$invalid }")
+                    label.control-label(for='{{attribute}}') {{attribute}}
+                    input.form-control(type='number', ng-model="sheet[attribute]", min=0, max=36, name='myval')
+                    span(ng-show='aform.$invalid') Must be a number between 0 and 36
+        div.row
+          div.col-md-4(ng-repeat="limit in ['Physical', 'Social', 'Mental']")
+            span {{limit}} Limit {{sheet[limit + ' Limit']}}
+      div.col-md-3
+        h3 Core Combat Info
+    div.row
+      div.col-md-6
+        h3 Skills
+        div.row
+          div.col-md-6
+            select(ng-model='newSkill', ng-options="skill.name group by skill.linkedAttribute for skill in allSkills")
+            span [
+            a(href="#", ng-click="skills.$add(newSkill)") add
+            span ]
+            ng-form(name='aform', ng-repeat="skill in skills")
+              div.form-group(ng-class!="{'has-error': aform.$invalid }")
+                label.control-label(for='{{skill.name}}') {{skill.name}} {{skill.value}}
+                input.form-control(type='number', ng-model="skill.value", min=0, max=36, name='myval')
+                span(ng-show='aform.$invalid') Must be a number between 0 and 36
+      div.col-md-6
+        h3 Qualities
+        div.row
+          div.col-md-6
+            select(ng-model='newQuality', ng-options="q.name + ' ' + q.cost group by q.type for q in allQualities")
+            span [
+            a(href="#", ng-click="addQuality(newQuality)") add
+            span ]
+            ul.list-unstyled(ng-repeat="q in qualities")
+              li
+                span {{q.name}} {{q.cost}}

@@ -7,22 +7,6 @@ a {
   color: #00B7FF;
 }
 
-.result-table {
-  margin: 20px 0;
-  width: 100%;
-  border-collapse: collapse;
-}
-.result-table td { padding: 8px; }
-.result-table > tbody > tr > td:first-child {
-  width: 25%;
-  max-width: 300px;
-  text-align: right;
-}
-.result-table td table {
-  background-color: lightblue;
-  text-align: right;
-}
-
 .sheet-region {
   box-shadow:         7px 7px 5px 0px rgba(50, 50, 50, 0.75);
 }
