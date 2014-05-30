@@ -1,0 +1,14 @@
+input.search-query(type='text', ng-model='search', placeholder="Search")
+table
+  thead
+    tr
+      th Project
+      th Description
+      th: a(href='#/new'): i.glyphicon.glyphicon-plus-sign
+  tbody
+    tr(ng-repeat!="project in projects | orderByPriority | filter:search | orderBy:'name'")
+      td
+        a(href="{{project.site}}", target="_blank") {{project.name}}
+      td {{project.description}}
+      td
+        a(href="#/edit/{{project.$id}}"): i.glyphicon.glyphicon-pencil
