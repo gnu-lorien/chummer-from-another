@@ -1,0 +1,3 @@
+ul(ng-repeat="key in sheets.$getIndex()")
+  li(ng-init="sheet = sheets[key]")
+    a(href="#/edit/{{key}}") {{sheet.name}} {{sheet}}

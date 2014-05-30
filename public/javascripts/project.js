@@ -9,27 +9,30 @@ angular.module('project', ['ngRoute', 'firebase'])
 .config(function($routeProvider) {
   $routeProvider
     .when('/', {
-      controller:'ListCtrl',
+      controller:'SheetListCtrl',
+      templateUrl:'partials/sr5-sheet-list'
+    })
+    .when('/edit/:sheetID', {
+      controller:'SheetEditCtrl',
       templateUrl:'partials/sr5-sheet'
     })
-    .when('/edit/:projectId', {
-      controller:'EditCtrl',
-      templateUrl:'partials/project-detail'
-    })
     .when('/new', {
-      controller:'CreateCtrl',
-      templateUrl:'partials/project-detail'
+      controller:'SheetCreateCtrl',
+      templateUrl:'partials/sr5-sheet-create'
     })
     .otherwise({
       redirectTo:'/'
     });
 })
 
-.controller('ListCtrl', function($scope, $firebase, fbURL, Projects) {
+.controller('SheetListCtrl', function($scope, $firebase, fbURL) {
+  $scope.sheets = $firebase(new Firebase(fbURL + 'sheets'));
+})
+
+.controller('SheetEditCtrl', function($scope, $routeParams, $firebase, fbURL) {
   $scope.allSkills = ALL_SKILLS;
   $scope.allQualities = ALL_QUALITIES;
-  $scope.projects = Projects;
-  $scope.expectedID = '-JOD2gghWBhT5sRbvSqO';
+  $scope.expectedID = $routeParams.sheetID;
   $scope.sheet = $firebase(new Firebase(fbURL + 'sheets/' + $scope.expectedID));
   $scope.skills = $scope.sheet.$child('skills');
   $scope.qualities = $scope.sheet.$child('qualities');
@@ -79,11 +82,13 @@ angular.module('project', ['ngRoute', 'firebase'])
   })
 })
  
-.controller('CreateCtrl', function($scope, $location, $timeout, Projects) {
+.controller('CreateCtrl', function($scope, $location, $timeout, $firebase) {
+  $scope.sheets = $firebase(new Firebase(fbURL + 'sheets'));
+  $scope.name = '';
   $scope.save = function() {
-    Projects.$add($scope.project, function() {
-      $timeout(function() { $location.path('/'); });
-    });
+    $scope.sheets.$add({"name": $scope.name}).then(function(res) {
+      $location.path('/edit/' + res.$id);
+    })
   };
 })
  
