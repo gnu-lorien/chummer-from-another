@@ -16,7 +16,7 @@ html(lang='en', ng-app="project")
     h2 Shadowrun Fifth Edition
     div.container(ng-view)
     div.container(ng-controller='ListCtrl')
-      form(ng-submit='doneEditing()')
+      form(ng-submit='doneEditing()', name='sheetForm')
         button(ng-click='doneEditing()') Submit Sheet
         div.row
           div.col-md-7
@@ -45,13 +45,22 @@ html(lang='en', ng-app="project")
               div.col-md-6
                 ul.list-unstyled(ng-repeat="attribute in ['Body', 'Agility', 'Reaction', 'Strength', 'Willpower', 'Logic', 'Intuition', 'Edge', 'Charisma', 'Edge Points']")
                   li
-                    {{attribute}}
-                    input(type='text', ng-model="sheet[attribute]")
+                    ng-form(name='aform')
+                      div.form-group(ng-class!="{'has-error': aform.$invalid }")
+                        label.control-label(for='{{attribute}}') {{attribute}}
+                        input.form-control(type='number', ng-model="sheet[attribute]", min=0, max=36, name='myval')
+                        span(ng-show='aform.$invalid') Must be a number between 0 and 36
               div.col-md-6
                 ul.list-unstyled(ng-repeat="attribute in ['Essence', 'Magic', 'Resonance', 'Initiative', 'Matrix Initiative', 'Astral Initiative', 'Composure', 'Judge Intentions', 'Lift/Carry', 'Memory', 'Movement']")
                   li
-                    {{attribute}}
-                    input(type='text', ng-model="sheet[attribute]")
+                    ng-form(name='aform')
+                      div.form-group(ng-class!="{'has-error': aform.$invalid }")
+                        label.control-label(for='{{attribute}}') {{attribute}}
+                        input.form-control(type='number', ng-model="sheet[attribute]", min=0, max=36, name='myval')
+                        span(ng-show='aform.$invalid') Must be a number between 0 and 36
+            div.row
+              div.col-md-4(ng-repeat="limit in ['Physical', 'Social', 'Mental']")
+                span {{limit}} Limit {{sheet[limit + ' Limit']}}
           div.col-md-3
             h3 Condition Monitor
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')

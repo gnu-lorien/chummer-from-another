@@ -36,6 +36,34 @@ angular.module('project', ['ngRoute', 'firebase'])
     // Update that sheet with the values in newSheet
     $scope.sheet.$save();
   }
+
+  var computeMentalLimit = function() {
+    return Math.ceil(((parseInt($scope.sheet.Logic) * 2) +
+           parseInt($scope.sheet.Intuition) +
+           parseInt($scope.sheet.Willpower)) / 3);
+  };
+  
+  var computeSocialLimit = function() {
+    return Math.ceil(((parseInt($scope.sheet.Charisma) * 2) +
+           parseInt($scope.sheet.Willpower) +
+           parseInt($scope.sheet.Essence)) / 3);
+  };
+  
+  var computePhysicalLimit = function() {
+    return Math.ceil(((parseInt($scope.sheet.Strength) * 2) +
+           parseInt($scope.sheet.Body) +
+           parseInt($scope.sheet.Reaction)) / 3);
+  };
+  
+  $scope.$watch(computePhysicalLimit, function() {
+    $scope.sheet['Physical Limit'] = computePhysicalLimit();
+  })
+  $scope.$watch(computeSocialLimit, function() {
+    $scope.sheet['Social Limit'] = computeSocialLimit();
+  })
+  $scope.$watch(computeMentalLimit, function() {
+    $scope.sheet['Mental Limit'] = computeMentalLimit();
+  })
 })
  
 .controller('CreateCtrl', function($scope, $location, $timeout, Projects) {
