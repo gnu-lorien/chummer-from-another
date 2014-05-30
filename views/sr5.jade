@@ -12,6 +12,7 @@ html(lang='en', ng-app="project")
     link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css')
     link(rel='stylesheet', href='/public/stylesheets/style.css')
     script(src='/public/javascripts/allSkills.js')
+    script(src='/public/javascripts/allQualities.js')
     script(src='/public/javascripts/project.js')
   body
     h2 Shadowrun Fifth Edition
@@ -73,10 +74,21 @@ html(lang='en', ng-app="project")
                 span [
                 a(href="#", ng-click="skills.$add(newSkill)") add
                 span ]
-                ul.list-unstyled
-                  li(ng-repeat='sheetskill in skills')
-                    span {{sheetskill.name}} {{sheetskill.linkedAttribute}}
+                ng-form(name='aform', ng-repeat="skill in skills")
+                  div.form-group(ng-class!="{'has-error': aform.$invalid }")
+                    label.control-label(for='{{skill.name}}') {{skill.name}} {{skill.value}}
+                    input.form-control(type='number', ng-model="skill.value", min=0, max=36, name='myval')
+                    span(ng-show='aform.$invalid') Must be a number between 0 and 36
           div.col-md-6
             h3 Qualities
+            div.row
+              div.col-md-6
+                select(ng-model='newQuality', ng-options="q.name + ' ' + q.cost group by q.type for q in allQualities")
+                span [
+                a(href="#", ng-click="addQuality(newQuality)") add
+                span ]
+                ul.list-unstyled(ng-repeat="q in qualities")
+                  li
+                    span {{q.name}} {{q.cost}}
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
     script(src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js')

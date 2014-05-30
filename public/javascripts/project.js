@@ -27,18 +27,27 @@ angular.module('project', ['ngRoute', 'firebase'])
 
 .controller('ListCtrl', function($scope, $firebase, fbURL, Projects) {
   $scope.allSkills = ALL_SKILLS;
+  $scope.allQualities = ALL_QUALITIES;
   $scope.projects = Projects;
   $scope.expectedID = '-JOD2gghWBhT5sRbvSqO';
   $scope.sheet = $firebase(new Firebase(fbURL + 'sheets/' + $scope.expectedID));
   $scope.skills = $scope.sheet.$child('skills');
+  $scope.qualities = $scope.sheet.$child('qualities');
   
   $scope.newSkill = {};
+  $scope.newQuality = {};
   
   $scope.doneEditing = function() {
     // Determine if we have a sheet already and get that
     // or create a new one
     // Update that sheet with the values in newSheet
     $scope.sheet.$save();
+    $scope.skills.$save();
+    $scope.qualities.$save();
+  }
+
+  $scope.addQuality = function(q) {
+    $scope.qualities.$add(q);
   }
 
   var computeMentalLimit = function() {
