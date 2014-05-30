@@ -1,11 +1,11 @@
 angular.module('project', ['ngRoute', 'firebase'])
  
-.value('fbURL', 'https://angularjs-projects.firebaseio.com/')
+.value('fbURL', 'https://blinding-fire-212.firebaseio.com/')
  
 .factory('Projects', function($firebase, fbURL) {
-  return $firebase(new Firebase(fbURL));
+  return $firebase(new Firebase(fbURL + 'projects'));
 })
- 
+
 .config(function($routeProvider) {
   $routeProvider
     .when('/', {
@@ -25,8 +25,17 @@ angular.module('project', ['ngRoute', 'firebase'])
     });
 })
 
-.controller('ListCtrl', function($scope, Projects) {
+.controller('ListCtrl', function($scope, $firebase, fbURL, Projects) {
   $scope.projects = Projects;
+  $scope.expectedID = '-JOD2gghWBhT5sRbvSqO';
+  $scope.sheet = $firebase(new Firebase(fbURL + 'sheets/' + $scope.expectedID));
+  
+  $scope.doneEditing = function() {
+    // Determine if we have a sheet already and get that
+    // or create a new one
+    // Update that sheet with the values in newSheet
+    $scope.sheet.$save();
+  }
 })
  
 .controller('CreateCtrl', function($scope, $location, $timeout, Projects) {

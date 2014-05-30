@@ -1,6 +1,5 @@
 doctype html
-//-html(ng-app="project")
-html(lang='en')
+html(lang='en', ng-app="project")
   head
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1')
@@ -11,30 +10,49 @@ html(lang='en')
     script(src='https://cdn.firebase.com/libs/angularfire/0.5.0/angularfire.min.js')
     link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css')
     link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css')
+    link(rel='stylesheet', href='/public/stylesheets/style.css')
     script(src='/public/javascripts/project.js')
   body
     h2 Shadowrun Fifth Edition
     div.container(ng-view)
-      div.row
-        div.col-md-7
-          Shadowrun Big Words
-        div.col-md-5
-          ul.unstyled
-            li
-              span Character
-              input(type='text', placeholder='Character name', ng-model='character.name')
-            li
-              span Player
-              input(type='text', placeholder='Player name', ng-model='character.player')
-            li
-              span Notes
-              input(type='text', ng-model='character.notes')
-      div.row
-        div.col-md-6(style="border-color:red; border-style:solid; border-radius: 4px")
-          h3.text-right Personal Data
-          div
-            p Name and such
-        div.col-md-6
-          h3.text-left Core Combat Info
+    div.container(ng-controller='ListCtrl')
+      form(ng-submit='doneEditing()')
+        button(ng-click='doneEditing()') Submit Sheet
+        div.row
+          div.col-md-7
+            Shadowrun Big Words
+          div.col-md-5
+            ul.list-unstyled
+              li
+                span Character
+                input(type='text', placeholder='Character name', ng-model='sheet.name')
+              li
+                span Player
+                input(type='text', placeholder='Player name', ng-model='sheet.player')
+              li
+                span Notes
+                input(type='text', ng-model='sheet.notes')
+        div.row
+          div.col-md-6(style="border-color:red; border-style:solid; border-radius: 4px")
+            h3.text-right Personal Data
+            div
+              p Name and such
+          div.col-md-6
+            h3.text-left Core Combat Info
+        div.row
+          div.col-md-6.sheet-region
+            div.row
+              div.col-md-6
+                ul.list-unstyled(ng-repeat="attribute in ['Body', 'Agility', 'Reaction', 'Strength', 'Willpower', 'Logic', 'Intuition', 'Edge', 'Charisma', 'Edge Points']")
+                  li
+                    {{attribute}}
+                    input(type='text', ng-model="sheet[attribute]")
+              div.col-md-6
+                ul.list-unstyled(ng-repeat="attribute in ['Essence', 'Magic', 'Resonance', 'Initiative', 'Matrix Initiative', 'Astral Initiative', 'Composure', 'Judge Intentions', 'Lift/Carry', 'Memory', 'Movement']")
+                  li
+                    {{attribute}}
+                    input(type='text', ng-model="sheet[attribute]")
+          div.col-md-3
+            h3 Condition Monitor
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
     script(src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js')
