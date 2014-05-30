@@ -26,9 +26,13 @@ angular.module('project', ['ngRoute', 'firebase'])
 })
 
 .controller('ListCtrl', function($scope, $firebase, fbURL, Projects) {
+  $scope.allSkills = ALL_SKILLS;
   $scope.projects = Projects;
   $scope.expectedID = '-JOD2gghWBhT5sRbvSqO';
   $scope.sheet = $firebase(new Firebase(fbURL + 'sheets/' + $scope.expectedID));
+  $scope.skills = $scope.sheet.$child('skills');
+  
+  $scope.newSkill = {};
   
   $scope.doneEditing = function() {
     // Determine if we have a sheet already and get that
