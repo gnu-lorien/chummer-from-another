@@ -2,8 +2,8 @@ angular.module('project', ['ngRoute', 'firebase'])
  
 .value('fbURL', 'https://blinding-fire-212.firebaseio.com/')
  
-.factory('Projects', function($firebase, fbURL) {
-  return $firebase(new Firebase(fbURL + 'projects'));
+.factory('Sheets', function($firebase, fbURL) {
+  return $firebase(new Firebase(fbURL + 'sheets'));
 })
 
 .config(function($routeProvider) {
@@ -25,8 +25,22 @@ angular.module('project', ['ngRoute', 'firebase'])
     });
 })
 
-.controller('SheetListCtrl', function($scope, $firebase, fbURL) {
-  $scope.sheets = $firebase(new Firebase(fbURL + 'sheets'));
+.controller('SheetListCtrl', function($scope, $location, Sheets) {
+  $scope.sheets = Sheets;
+
+  $scope.newSheet = function() {
+    var p = $scope.sheets.$add({"name": "Initial Name"});
+    p.then(function(res) {
+      $location.path('/edit/' + res.name());
+    })
+  };
+
+  $scope.testmeth = function() {
+    angular.forEach($scope.sheets, function(value, key) {
+      console.log(value);
+      console.log(key);
+    })
+  }
 })
 
 .controller('SheetEditCtrl', function($scope, $routeParams, $firebase, fbURL) {
