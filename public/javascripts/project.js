@@ -148,6 +148,23 @@ angular.module('project', ['ngRoute', 'firebase'])
   $scope.doneEditing = function() {
     $scope.skills.$save();
   }
+  
+  $scope.calculateSkillRoll = function(skill) {
+    var linkedAttributeValue = parseInt($scope.sheet[skill.linkedAttribute]);
+    var total = linkedAttributeValue + skill.value;
+    var description = "";
+    if (skill.value <= 0) {
+      total -= 1;
+      description = "Defaulting " + skill.linkedAttribute + "(" + linkedAttributeValue + ") - 1"
+    } else {
+      description = skill.linkedAttribute + "(" + linkedAttributeValue + ") + " + skill.name + "(" + skill.value + ")"
+    }
+    if (total < 0) {
+      total = 0;
+    }
+    return {"value": total,
+            "description": description};
+  }
 
   angular.forEach(Skills.allSkills, function(value, key) {
     if (!angular.isDefined($scope.allSkillsByAttribute[value.linkedAttribute])) {
