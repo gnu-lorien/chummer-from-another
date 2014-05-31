@@ -10,3 +10,4 @@ form(name='abilitiesForm', ng-submit='doneEditing()')
             //input(type='number', ng-model="sheet.skills['{{skill}}']")
             //input(type='number', ng-model="sheet.skills[getModelIndexForSkill(skill)]")
             input(type='number', ng-model="skill.value")
+            span Total: {{skill.value + sheet.skills[getModelIndexForSkill(skill.name)].value}}

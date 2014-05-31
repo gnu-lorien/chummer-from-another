@@ -88,7 +88,7 @@ angular.module('project', ['ngRoute', 'firebase'])
   $scope.allSkills = ALL_SKILLS;
   $scope.allSkillsByAttribute = {};
   $scope.expectedID = $routeParams.sheetID;
-  //$scope.sheet = $firebase(new Firebase(fbURL + 'sheets/' + $scope.expectedID));
+  $scope.sheet = $firebase(new Firebase(fbURL + 'sheets/' + $scope.expectedID));
   $scope.skills = TheseSkills;//scope.sheet.$child('skills');
 
   $scope.getModelIndexForSkill = function(skillName) {
