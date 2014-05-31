@@ -126,12 +126,10 @@ angular.module('project', ['ngRoute', 'firebase'])
   $scope.qualities = $scope.sheet.$child('qualities');
 })
 
-.controller('SheetAbilitiesCtrl', function($scope, $routeParams, $firebase, fbURL, Skills, TheseSkills) {
-  $scope.allSkills = ALL_SKILLS;
+.controller('SheetAbilitiesCtrl', function($scope, $routeParams, $firebase, fbURL, Skills, TheseSkills, ThisSheet) {
   $scope.allSkillsByAttribute = {};
-  $scope.expectedID = $routeParams.sheetID;
-  $scope.sheet = $firebase(new Firebase(fbURL + 'sheets/' + $scope.expectedID));
-  $scope.skills = TheseSkills;//scope.sheet.$child('skills');
+  $scope.sheet = ThisSheet;
+  $scope.skills = TheseSkills;
 
   $scope.getModelIndexForSkill = function(skillName) {
     var keys = $scope.skills.$getIndex();
@@ -148,7 +146,7 @@ angular.module('project', ['ngRoute', 'firebase'])
     $scope.skills.$save();
   }
 
-  angular.forEach($scope.allSkills, function(value, key) {
+  angular.forEach(Skills.allSkills, function(value, key) {
     if (!angular.isDefined($scope.allSkillsByAttribute[value.linkedAttribute])) {
       $scope.allSkillsByAttribute[value.linkedAttribute] = []
     }
