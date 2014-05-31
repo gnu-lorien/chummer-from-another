@@ -159,13 +159,13 @@ angular.module('project', ['ngRoute', 'firebase'])
   
 })
 
-.controller('SheetEditCtrl', function($scope, $routeParams, $firebase, fbURL) {
+.controller('SheetEditCtrl', function($scope, $routeParams, $firebase, fbURL, ThisSheet, TheseSkills, TheseQualities) {
   $scope.allSkills = ALL_SKILLS;
   $scope.allQualities = ALL_QUALITIES;
   $scope.expectedID = $routeParams.sheetID;
-  $scope.sheet = $firebase(new Firebase(fbURL + 'sheets/' + $scope.expectedID));
-  $scope.skills = $scope.sheet.$child('skills');
-  $scope.qualities = $scope.sheet.$child('qualities');
+  $scope.sheet = ThisSheet;
+  $scope.skills = TheseSkills;
+  $scope.qualities = TheseQualities;
   
   $scope.newSkill = {};
   $scope.newQuality = {};
