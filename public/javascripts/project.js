@@ -89,17 +89,8 @@ angular.module('project', ['ngRoute', 'firebase'])
     .when('/abilities/:sheetID', {
       controller:'SheetAbilitiesCtrl',
       templateUrl:'partials/sr5-abilities',
-      resolve: {TheseSkills: function($q, $route, $firebase, fbURL) {
-          var def = $q.defer();
-          var obj = $firebase(new Firebase(fbURL + 'sheets/' + $route.current.params.sheetID ));
-          obj.$on('loaded', function() {
-            var c = obj.$child('skills');
-            c.$on('loaded', function() {
-              def.resolve(c);
-            });
-          });
-          return def.promise;
-      }}
+      resolve: {TheseSkills: SheetSkillsResolver,
+                ThisSheet: SheetResolver}
     })
     .when('/new', {
       controller:'SheetCreateCtrl',
