@@ -1,0 +1,12 @@
+form(name='abilitiesForm', ng-submit='doneEditing()')
+  button(ng-click='doneEditing()') Submit Sheet
+  div.container
+    div.row
+      div(ng-repeat='(attribute, skills) in allSkillsByAttribute')
+        h3 {{attribute}}
+        ul.list-unstyled
+          li(ng-repeat='skill in skills track by $index')
+            span {{skill.name}}
+            //input(type='number', ng-model="sheet.skills['{{skill}}']")
+            //input(type='number', ng-model="sheet.skills[getModelIndexForSkill(skill)]")
+            input(type='number', ng-model="skill.value")

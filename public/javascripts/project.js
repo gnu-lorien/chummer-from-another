@@ -6,6 +6,21 @@ angular.module('project', ['ngRoute', 'firebase'])
   return $firebase(new Firebase(fbURL + 'sheets'));
 })
 
+.factory('Skills', function() {
+  function Skills() {
+    
+  }
+  Skills.allSkills = ALL_SKILLS;
+  Skills.prototype.getSkillByName = function(skillName) {
+    for (var i = 0; i < allSkills.length; ++i) {
+      if (allSkills[i].name == skillName) {
+        return angular.copy(allSkills[i]);
+      }
+    }
+  }
+  return Skills;
+})
+
 .config(function($routeProvider) {
   $routeProvider
     .when('/', {
@@ -15,6 +30,25 @@ angular.module('project', ['ngRoute', 'firebase'])
     .when('/edit/:sheetID', {
       controller:'SheetEditCtrl',
       templateUrl:'partials/sr5-sheet'
+    })
+    .when('/pick-priorities/:sheetID', {
+      controller:'SheetPickPrioritiesCtrl',
+      templateUrl:'partials/sr5-pick-priorities'
+    })
+    .when('/abilities/:sheetID', {
+      controller:'SheetAbilitiesCtrl',
+      templateUrl:'partials/sr5-abilities',
+      resolve: {TheseSkills: function($q, $route, $firebase, fbURL) {
+          var def = $q.defer();
+          var obj = $firebase(new Firebase(fbURL + 'sheets/' + $route.current.params.sheetID ));
+          obj.$on('loaded', function() {
+            var c = obj.$child('skills');
+            c.$on('loaded', function() {
+              def.resolve(c);
+            });
+          });
+          return def.promise;
+      }}
     })
     .when('/new', {
       controller:'SheetCreateCtrl',
@@ -41,6 +75,45 @@ angular.module('project', ['ngRoute', 'firebase'])
       console.log(key);
     })
   }
+})
+
+.controller('SheetPickPrioritiesCtrl', function($scope, $routeParams, $firebase, fbURL) {
+  $scope.expectedID = $routeParams.sheetID;
+  $scope.sheet = $firebase(new Firebase(fbURL + 'sheets/' + $scope.expectedID));
+  $scope.skills = $scope.sheet.$child('skills');
+  $scope.qualities = $scope.sheet.$child('qualities');
+})
+
+.controller('SheetAbilitiesCtrl', function($scope, $routeParams, $firebase, fbURL, Skills, TheseSkills) {
+  $scope.allSkills = ALL_SKILLS;
+  $scope.allSkillsByAttribute = {};
+  $scope.expectedID = $routeParams.sheetID;
+  //$scope.sheet = $firebase(new Firebase(fbURL + 'sheets/' + $scope.expectedID));
+  $scope.skills = TheseSkills;//scope.sheet.$child('skills');
+
+  $scope.getModelIndexForSkill = function(skillName) {
+    var keys = $scope.skills.$getIndex();
+    for (var i=0; i < keys.length; ++i) {
+      var key = keys[i];
+      if (skillName == $scope.skills[key].name) {
+        return key;
+      }
+    }
+    return -1;
+  }
+  
+  $scope.doneEditing = function() {
+    $scope.skills.$save();
+  }
+
+  angular.forEach($scope.allSkills, function(value, key) {
+    if (!angular.isDefined($scope.allSkillsByAttribute[value.linkedAttribute])) {
+      $scope.allSkillsByAttribute[value.linkedAttribute] = []
+    }
+    var sheetskill = $scope.skills[$scope.getModelIndexForSkill(value.name)];
+    $scope.allSkillsByAttribute[value.linkedAttribute].push(sheetskill);
+  })
+  
 })
 
 .controller('SheetEditCtrl', function($scope, $routeParams, $firebase, fbURL) {
@@ -96,11 +169,17 @@ angular.module('project', ['ngRoute', 'firebase'])
   })
 })
  
-.controller('CreateCtrl', function($scope, $location, $timeout, $firebase) {
+.controller('CreateCtrl', function($scope, $location, $timeout, $firebase, Skills) {
   $scope.sheets = $firebase(new Firebase(fbURL + 'sheets'));
   $scope.name = '';
   $scope.save = function() {
     $scope.sheets.$add({"name": $scope.name}).then(function(res) {
+      var skills = res.$child('skills');
+      for (var i=0; i < Skills.allSkills.length; ++i) {
+        var newskill = angular.copy(Skills.allSkills[i]);
+        newskill.value = 0;
+        skills.$add(newskill);
+      }
       $location.path('/edit/' + res.$id);
     })
   };

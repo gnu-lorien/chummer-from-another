@@ -4,7 +4,10 @@ div.container
       h2 Sheets
       ul(ng-repeat="sheet in sheets | orderByPriority")
         li
-          a(href='', ng-href="#/edit/{{sheet.$id}}") {{sheet.name}}
+          span {{sheet.name}}
+          a(href='', ng-href="#/edit/{{sheet.$id}}") Edit
+          a(href='', ng-href="#/pick-priorities/{{sheet.$id}}") Pick Priorities
+          a(href='', ng-href="#/abilities/{{sheet.$id}}") Abilities
       span [
       a(href="#", ng-click="newSheet()") Add New Sheet
       span ]
