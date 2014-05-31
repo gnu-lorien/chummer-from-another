@@ -80,7 +80,10 @@ angular.module('project', ['ngRoute', 'firebase'])
     })
     .when('/edit/:sheetID', {
       controller:'SheetEditCtrl',
-      templateUrl:'partials/sr5-sheet'
+      templateUrl:'partials/sr5-sheet',
+      resolve: {ThisSheet: SheetResolver,
+                TheseSkills: SheetSkillsResolver,
+                TheseQualities: SheetQualitiesResolver}
     })
     .when('/pick-priorities/:sheetID', {
       controller:'SheetPickPrioritiesCtrl',
