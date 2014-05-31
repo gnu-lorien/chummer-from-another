@@ -1,3 +1,42 @@
+var SheetSkillsResolver = function($q, $route, $firebase, fbURL) {
+  var def = $q.defer();
+  var obj = $firebase(new Firebase(fbURL + 'sheets/' + $route.current.params.sheetID ));
+  obj.$on('loaded', function() {
+    var c = obj.$child('skills');
+    c.$on('loaded', function() {
+      def.resolve(c);
+    });
+  });
+  return def.promise;
+}
+
+var SheetSkillsDependentResolver = function($q, $route, $firebase, fbURL, ThisSheet) {
+  var def = $q.defer();
+  var c = ThisSheet.$child('skills');
+  c.$on('loaded', function() {
+    def.resolve(c);
+  });
+  return def.promise;
+}
+
+var SheetQualitiesDependentResolver = function($q, $route, $firebase, fbURL, ThisSheet) {
+  var def = $q.defer();
+  var c = ThisSheet.$child('qualities');
+  c.$on('loaded', function() {
+    def.resolve(c);
+  });
+  return def.promise;
+}
+
+var SheetResolver = function($q, $route, $firebase, fbURL) {
+  var def = $q.defer();
+  var obj = $firebase(new Firebase(fbURL + 'sheets/' + $route.current.params.sheetID ));
+  obj.$on('loaded', function() {
+    def.resolve(obj);
+  });
+  return def.promise;
+}
+
 angular.module('project', ['ngRoute', 'firebase'])
  
 .value('fbURL', 'https://blinding-fire-212.firebaseio.com/')
