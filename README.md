@@ -1,4 +1,14 @@
 chummer-from-another
 ====================
 
-An AngularJS web application for managing character sheets
+An web application for managing Shadowrun Fifth Edition character sheets
+
+Technologies
+====================
+* node.js
+* Express
+* AngularJS
+* Jade
+* Twitter Bootstrap
+* Firebase
+* AngularFire
