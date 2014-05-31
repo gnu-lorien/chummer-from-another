@@ -19,6 +19,18 @@ var SheetSkillsDependentResolver = function($q, $route, $firebase, fbURL, ThisSh
   return def.promise;
 }
 
+var SheetQualitiesResolver = function($q, $route, $firebase, fbURL) {
+  var def = $q.defer();
+  var obj = $firebase(new Firebase(fbURL + 'sheets/' + $route.current.params.sheetID ));
+  obj.$on('loaded', function() {
+    var c = obj.$child('qualities');
+    c.$on('loaded', function() {
+      def.resolve(c);
+    });
+  });
+  return def.promise;
+}
+
 var SheetQualitiesDependentResolver = function($q, $route, $firebase, fbURL, ThisSheet) {
   var def = $q.defer();
   var c = ThisSheet.$child('qualities');
