@@ -1,8 +1,14 @@
 MOVEMENT_RULES = {
     "reference": "SR5:162",
     "rates": {
-        "walk": "Agility * 2",
-        "run": "Agility * 4"
+        "walk": {
+            "attribute": "Agility",
+            "multiplier": 2
+        },
+        "run": {
+            "attribute": "Agility",
+            "multiplier": 4
+        }
     },
     "sprintIncrease": {
         "Dwarf": 1,
