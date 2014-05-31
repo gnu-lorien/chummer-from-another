@@ -167,6 +167,49 @@ angular.module('project', ['ngRoute', 'firebase'])
   $scope.$watch(computeMentalLimit, function() {
     $scope.sheet['Mental Limit'] = computeMentalLimit();
   })
+
+  $scope.walkSpeed = function() {
+    return $scope.sheet[MOVEMENT_RULES.rates.walk.attribute] * MOVEMENT_RULES.rates.walk.multiplier;
+  }
+  $scope.runSpeed = function() {
+    return $scope.sheet[MOVEMENT_RULES.rates.walk.attribute] * MOVEMENT_RULES.rates.run.multiplier;
+  }
+  $scope.sprintIncrease = function() {
+    if ($scope.sheet.Race in MOVEMENT_RULES.sprintIncrease) {
+      return MOVEMENT_RULES.sprintIncrease[$scope.sheet.Race];
+    }
+    return "Race not selected";
+  }
+  $scope.memoryRoll = function() {
+    var total = 0;
+    angular.forEach(MEMORY, function(value, key) {
+      total += $scope.sheet[value];
+    })
+    return total;
+  }
+  $scope.judgeIntentionsRoll = function() {
+    var total = 0;
+    angular.forEach(JUDGE_INTENTIONS, function(value, key) {
+      total += $scope.sheet[value];
+    })
+    return total;
+  }
+  $scope.composureRoll = function() {
+    var total = 0;
+    angular.forEach(COMPOSURE, function(value, key) {
+      total += $scope.sheet[value];
+    })
+    return total;
+  }
+  $scope.lift = function() {
+    return $scope.sheet.Strength * LIFT_CARRY_RULES["lift"];
+  }
+  $scope.overhead = function() {
+    return $scope.sheet.Strength * LIFT_CARRY_RULES["overhead lift"];
+  }
+  $scope.carry = function() {
+    return $scope.sheet.Strength * LIFT_CARRY_RULES["carry"];
+  }
 })
  
 .controller('CreateCtrl', function($scope, $location, $timeout, $firebase, Skills) {

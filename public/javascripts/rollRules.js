@@ -1,3 +1,3 @@
-JUDGE_INTENTIONS = ["Charisma", "Intelligence];
+JUDGE_INTENTIONS = ["Charisma", "Intuition"];
 COMPOSURE = ["Charisma", "Willpower"];
 MEMORY = ["Logic", "Willpower"];

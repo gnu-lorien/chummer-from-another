@@ -32,13 +32,28 @@ div.container
                     input.form-control(type='number', ng-model="sheet[attribute]", min=0, max=36, name='myval')
                     span(ng-show='aform.$invalid') Must be a number between 0 and 36
           div.col-md-6
-            ul.list-unstyled(ng-repeat="attribute in ['Essence', 'Magic', 'Resonance', 'Initiative', 'Matrix Initiative', 'Astral Initiative', 'Composure', 'Judge Intentions', 'Lift/Carry', 'Memory', 'Movement']")
-              li
+            ul.list-unstyled
+              li(ng-repeat="attribute in ['Essence', 'Magic', 'Resonance', 'Initiative', 'Matrix Initiative', 'Astral Initiative']")
                 ng-form(name='aform')
                   div.form-group(ng-class!="{'has-error': aform.$invalid }")
                     label.control-label(for='{{attribute}}') {{attribute}}
                     input.form-control(type='number', ng-model="sheet[attribute]", min=0, max=36, name='myval')
                     span(ng-show='aform.$invalid') Must be a number between 0 and 36
+              li
+                label.control-label(for='Composure') Composure
+                span {{composureRoll()}}
+              li
+                label.control-label(for='Judge Intentions') Judge Intentions
+                span {{judgeIntentionsRoll()}}
+              li
+                label.control-label(for='Lift/Carry') Lift/Carry
+                span Lift {{lift()}} Carry {{carry()}}
+              li
+                label.control-label(for='Memory') Memory
+                span {{memoryRoll()}}
+              li
+                label.control-label(for='Movement') Movement
+                span Walk {{walkSpeed()}} Run {{runSpeed()}} Sprint Increase {{sprintIncrease()}}
         div.row
           div.col-md-4(ng-repeat="limit in ['Physical', 'Social', 'Mental']")
             span {{limit}} Limit {{sheet[limit + ' Limit']}}
