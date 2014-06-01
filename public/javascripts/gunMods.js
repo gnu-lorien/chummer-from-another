@@ -1,0 +1,22 @@
+GUN_MODS = [
+{"name":"Airbust Link", "mount location":"none", "availability":"6R", "cost":"600", "page":"431", "effect":"Reduce Scatter by 2 meter per net hit", "requires wireless":"yes"},
+{"name":"Bipod", "mount location":"underbarrel", "availability":"2", "cost":"200", "page":"431", "recoil compensation":"2", "effect":"Deploy with simple action to get 2 recoil compensation", "requires wireless":"no", "wireless bonus":"Deploy bipod as free action"},
+{"name":"Concealable holster", "mount location":"none", "availability":"2", "cost":"150", "concealability":"-1", "page":"431", "allowed weapon types":[{"type":"taser"},{"type":"pistol"}], "requires wireless":"no", "wireless bonus":"concealability -2"},
+{"name":"Gas-vent system(Rating 1)", "mount location":"barrel", "availability":"3R", "cost":"200", "page":"431", "recoil compensation":"1", "requires wireless":"no"},
+{"name":"Gas-vent system(Rating 2)", "mount location":"barrel", "availability":"6R", "cost":"400", "page":"431", "recoil compensation":"2", "requires wireless":"no"},
+{"name":"Gas-vent system(Rating 3)", "mount location":"barrel", "availability":"9R", "cost":"600", "page":"431", "recoil compensation":"3", "requires wireless":"no"},
+{"name":"Gyro mount", "mount location":"underbarrel", "availability":"7", "cost":"1400", "page":"432", "recoil compensation":"6", "requires wireless":"no", "wireless bonus":"Release weapon is free action"},
+{"name":"Hidden arm slide", "mount location":"none", "availability":"4R", "cost":"350", "page":"432", "conealability modifier":"-1", "effect":"Changes the quick draw threashold to 2", "requires wireless":"no", "wireless bonus":{"action":"Ready Weapon", "type":"free"}},
+{"name":"Imaging scope", "mount location":"top", "availability":"2", "cost":"300", "page":"432", "vision modifier capacity":"3", "requires wireless":"no", "wireless bonus":"Can share image with run team"},
+{"name":"Laser sight", "mount location":[{"option":"top"},{"option":"underbarrel"}], "availability":"2", "cost":"125", "page":"432", "accuracy modifier":"1", "incompatabile mods":[{"name":"Smartgun systen, internal"},{"name":"Smartgun systen, external"}], "requires wireless":"no", "wireless bonus":"+1 bonus on attack test pools"},
+{"name":"Periscope", "mount location":"top", "availability":"3", "cost":"70", "page":"432", "effect":"Reduce shooting around corner penalty to -2"},
+{"name":"Quick-draw holster", "mount location":"none", "availability":"4", "cost":"175", "page":"432", "effect":"Reduces the quick draw threashold by -1"},
+{"name":"Shock pad", "mount location":"none", "availability":"2", "cost":"50", "page":"432", "recoil compensation":"2", "allowed weapon type":[{"type":"shotgun"},{"type":"rifle"},{"type":"heavy weapon"}]},
+{"name":"Silencer/suppressor", "mount location":"barrel", "availability":"9F", "cost":"500", "page":"432", "effect":"-4 to Perception tests to notice weapon discharge", "wireless bonus":"Alerts user if anyone detected reaction to weapon discharge"},
+{"name":"Smart firing platform", "mount location":"underbarrel", "availability":"12F", "cost":"2500", "page":"434"},
+{"name":"Smartgun systen, internal", "mount location":"none", "availability modifier":"2", "cost multiplier":"2", "page":"434", "accuracy modifier":"2", "wireless bonus":"+1 to attack pools"},
+{"name":"Smartgun system, external", "mount location":[{"option":"top"},{"option":"underbarrel"}], "availability":"4R", "cost":"200", "page":"434", "accuracy modifier":"2", "wireless bonus":"+1 to attack pools"},
+{"name":"Spare clip", "mount location":"none", "availability":"4", "cost":"5", "page":"434"},
+{"name":"Speed loader", "mount location":"none", "availability":"2", "cost":"25", "page":"434", "effect":"Reload revolver as complex action", "allowed weapon types":[{"type":"revolver"}]},
+{"name":"Tripod", "mount location":"uderbarrel", "availability":"2", "cost":"25", "page":"434", "recoil compensation":"6", "wireless bonus":"Deploys and folds as free action"}
+]
